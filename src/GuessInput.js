@@ -22,7 +22,9 @@ const GuessInput = ({ onGuess }) => {
         maxLength={1}
         placeholder="Wprowadź literę"
       />
-      <button onClick={handleGuess}>Zgadnij</button>
+      <button className={"SpinButton"} onClick={handleGuess}>
+        Zgadnij
+      </button>
     </div>
   );
 };
