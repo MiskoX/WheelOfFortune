@@ -10,7 +10,7 @@ const Wheel = ({ onSpin, disabled }) => {
 
   return (
     <div>
-      <button onClick={spinWheel} disabled={disabled}>
+      <button className={"SpinButton"} onClick={spinWheel} disabled={disabled}>
         Kręć kołem!
       </button>
       {disabled && <p>Nie możesz teraz kręcić kołem.</p>}

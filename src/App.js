@@ -120,9 +120,9 @@ const Game = () => {
         <>
           <div className="Window">
             <h1>Koło Fortuny</h1>
+            <p>Gracz: {currentPlayer}</p>
             <p>Kategoria: {category}</p>
             <WordDisplay phrase={phrase} guessedLetters={guessedLetters} />
-            <p>Gracz: {currentPlayer}</p>
 
             {/* Disable/Show the components based on the state */}
             {!canGuess && <Wheel onSpin={handleSpin} />}
