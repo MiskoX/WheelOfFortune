@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/WheelOfFortune/static/css/main.b54b22e6.css",
+    "main.css": "/WheelOfFortune/static/css/main.00e87e33.css",
     "main.js": "/WheelOfFortune/static/js/main.5e30ae17.js",
     "static/media/background.jpg": "/WheelOfFortune/static/media/background.fcc126b62af9bfb7a2bf.jpg",
     "index.html": "/WheelOfFortune/index.html",
-    "main.b54b22e6.css.map": "/WheelOfFortune/static/css/main.b54b22e6.css.map",
+    "main.00e87e33.css.map": "/WheelOfFortune/static/css/main.00e87e33.css.map",
     "main.5e30ae17.js.map": "/WheelOfFortune/static/js/main.5e30ae17.js.map"
   },
   "entrypoints": [
-    "static/css/main.b54b22e6.css",
+    "static/css/main.00e87e33.css",
     "static/js/main.5e30ae17.js"
   ]
 }
