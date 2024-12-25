@@ -20,16 +20,14 @@ const Game = () => {
   const [wheelValue, setWheelValue] = useState(null);
   const [canGuess, setCanGuess] = useState(false);
 
-  const handlePlayersSetup = (newPlayers) => {
+  const handlePlayersSetup = (newPlayers, chosenChooser) => {
     setPlayers(newPlayers);
-    const chooserIndex = Math.floor(Math.random() * newPlayers.length);
-    const chooser = newPlayers[chooserIndex];
-    setChooser(chooser);
+    setChooser(chosenChooser);
     const updatedPlayers = newPlayers.filter(
-      (_, index) => index !== chooserIndex
+      (player) => player !== chosenChooser
     );
     setPlayers(updatedPlayers);
-    toast.info(`${chooser} wybiera hasło i kategorię.`);
+    toast.info(`${chosenChooser} wybiera hasło i kategorię.`);
   };
 
   const handlePhraseSetup = (newPhrase, newCategory) => {
@@ -66,6 +64,7 @@ const Game = () => {
   const handleGuess = (letter) => {
     if (guessedLetters.includes(letter)) {
       toast.warning("Ta litera już została zgadnięta!");
+      nextTurn();
       return;
     }
 

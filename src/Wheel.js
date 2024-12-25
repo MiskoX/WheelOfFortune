@@ -1,7 +1,28 @@
 import React from "react";
 
 const Wheel = ({ onSpin, disabled }) => {
-  const values = [0, 100, 200, 300, "Bankrut"];
+  const values = [
+    300,
+    1000,
+    50,
+    100,
+    200,
+    600,
+    200,
+    500,
+    100,
+    100,
+    800,
+    900,
+    50,
+    400,
+    500,
+    "Bankrut",
+    700,
+    300,
+    0,
+    400,
+  ];
 
   const spinWheel = () => {
     const result = values[Math.floor(Math.random() * values.length)];

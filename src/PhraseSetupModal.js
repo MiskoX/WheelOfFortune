@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,6 +10,12 @@ const PhraseSetupModal = ({ onSetup, chooser }) => {
     formState: { errors },
     reset,
   } = useForm();
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
 
   const onSubmit = (data) => {
     const { phrase, category } = data;
@@ -38,12 +44,28 @@ const PhraseSetupModal = ({ onSetup, chooser }) => {
           )}
         </div>
 
-        <div>
+        <div style={{ position: "relative" }}>
           <input
-            type="text"
+            type={showPassword ? "text" : "password"}
             {...register("phrase", { required: "Hasło jest wymagane" })}
             placeholder="Wprowadź hasło"
           />
+          <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            style={{
+              position: "absolute",
+              right: "0px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+            }}
+            aria-label={showPassword ? "Ukryj hasło" : "Pokaż hasło"}
+          >
+            {showPassword ? "👁️" : "🙈"}
+          </button>
           {errors.phrase && (
             <p style={{ color: "red" }}>{errors.phrase.message}</p>
           )}

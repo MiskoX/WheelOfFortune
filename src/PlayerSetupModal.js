@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 
 const PlayerSetupModal = ({ onSetup }) => {
@@ -8,6 +8,7 @@ const PlayerSetupModal = ({ onSetup }) => {
     formState: { errors },
     reset,
     setError,
+    clearErrors,
   } = useForm({
     defaultValues: {
       players: [{ name: "" }, { name: "" }, { name: "" }], // minimum 3 graczy
@@ -19,6 +20,8 @@ const PlayerSetupModal = ({ onSetup }) => {
     name: "players",
   });
 
+  const [chooser, setChooser] = useState(null);
+
   const handleAddPlayer = () => {
     append({ name: "" }); // Dodawanie gracza
   };
@@ -27,6 +30,11 @@ const PlayerSetupModal = ({ onSetup }) => {
     if (fields.length > 3) {
       remove(index); // Usuwanie gracza, ale nie poniżej 3
     }
+  };
+
+  const handleChooserChange = (index) => {
+    setChooser(index);
+    clearErrors("chooser"); // Usuwanie błędu po wybraniu osoby
   };
 
   const onSubmit = (data) => {
@@ -38,8 +46,16 @@ const PlayerSetupModal = ({ onSetup }) => {
       return;
     }
 
+    if (chooser === null) {
+      setError("chooser", {
+        type: "manual",
+        message: "Musisz wybrać osobę wybierającą hasło",
+      });
+      return;
+    }
+
     const players = data.players.map((player) => player.name);
-    onSetup(players);
+    onSetup(players, players[chooser]);
     reset(); // Resetowanie formularza po udanym przesłaniu
   };
 
@@ -57,7 +73,20 @@ const PlayerSetupModal = ({ onSetup }) => {
               rules={{ required: "Nazwa gracza jest wymagana" }}
               render={({ field }) => (
                 <div className="InputGroup">
-                  <input {...field} placeholder={`Gracz ${index + 1}`} />
+                  <label>
+                    <input
+                      type="radio"
+                      name="chooser"
+                      checked={chooser === index}
+                      onChange={() => handleChooserChange(index)}
+                    />
+                  </label>
+                  <input
+                    type="text"
+                    {...field}
+                    placeholder={`Gracz ${index + 1}`}
+                  />
+
                   <button
                     type="button"
                     onClick={() => handleRemovePlayer(index)}
@@ -84,6 +113,10 @@ const PlayerSetupModal = ({ onSetup }) => {
           <p style={{ color: "red" }}>
             {errors.players.message || "Musisz dodać przynajmniej 3 graczy"}
           </p>
+        )}
+
+        {errors.chooser && (
+          <p style={{ color: "red" }}>{errors.chooser.message}</p>
         )}
 
         <button type="submit">Zatwierdź</button>

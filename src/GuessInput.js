@@ -13,12 +13,19 @@ const GuessInput = ({ onGuess }) => {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleGuess();
+    }
+  };
+
   return (
     <div>
       <input
         type="text"
         value={guess}
         onChange={(e) => setGuess(e.target.value)}
+        onKeyDown={handleKeyPress}
         maxLength={1}
         placeholder="Wprowadź literę"
       />
