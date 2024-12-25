@@ -100,6 +100,21 @@ const Game = () => {
     }
   };
 
+  const handleRevealAll = () => {
+    setGuessedLetters(phrase.toUpperCase().split(""));
+    toast.success("Wszystkie litery zostały odsłonięte!");
+  };
+
+  const handleGuessPhrase = (guessedPhrase) => {
+    if (guessedPhrase.toUpperCase() === phrase.toUpperCase()) {
+      toast.success(`${currentPlayer} odgadł całe hasło! Gratulacje!`);
+      setGuessedLetters(phrase.toUpperCase().split(""));
+    } else {
+      toast.error("Nieprawidłowe hasło!");
+      nextTurn();
+    }
+  };
+
   const nextTurn = () => {
     const nextPlayerIndex = (turn + 1) % players.length;
     setTurn(nextPlayerIndex);
@@ -118,14 +133,30 @@ const Game = () => {
       ) : (
         <>
           <div className="Window">
+            <button className="ShowAllButton" onClick={() => handleRevealAll()}>
+              Odsłoń wszystkie litery
+            </button>
             <h1>Koło Fortuny</h1>
             <p>Gracz: {currentPlayer}</p>
             <p>Kategoria: {category}</p>
             <WordDisplay phrase={phrase} guessedLetters={guessedLetters} />
 
-            {/* Disable/Show the components based on the state */}
             {!canGuess && <Wheel onSpin={handleSpin} />}
-            {canGuess && <GuessInput onGuess={handleGuess} />}
+            {canGuess && (
+              <>
+                <GuessInput onGuess={handleGuess} />
+                <input
+                  type="text"
+                  placeholder="Odgadnij całe hasło"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleGuessPhrase(e.target.value);
+                      e.target.value = "";
+                    }
+                  }}
+                />
+              </>
+            )}
           </div>
           <div className="Score">
             <h2>Tablica punktów</h2>
